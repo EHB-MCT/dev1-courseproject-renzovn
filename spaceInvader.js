@@ -8,7 +8,7 @@ signature();
 function signature() {
   context.fillStyle = "black";
   context.beginPath();
-  context.rect(50, 50, 300, 300);
+  context.rect(50, 10, 300, 300);
   context.stroke();
   context.fill();
   context.closePath();
@@ -20,7 +20,6 @@ function drawBox1() {
   context.fillStyle = "green";
   context.beginPath();
   context.rect(125, 50, 50, 50);
-  context.stroke();
   context.fill();
   context.closePath();
 }
@@ -31,7 +30,6 @@ function drawBox2() {
   context.fillStyle = "green";
   context.beginPath();
   context.rect(175, 50, 50, 50);
-  context.stroke();
   context.fill();
   context.closePath();
 }
@@ -42,7 +40,6 @@ function drawBox3() {
   context.fillStyle = "green";
   context.beginPath();
   context.rect(225, 50, 50, 50);
-  context.stroke();
   context.fill();
   context.closePath();
 }
@@ -53,7 +50,6 @@ function drawBox4() {
   context.fillStyle = "green";
   context.beginPath();
   context.rect(125, 100, 50, 50);
-  context.stroke();
   context.fill();
   context.closePath();
 }
@@ -64,7 +60,6 @@ function drawBox5() {
   context.fillStyle = "green";
   context.beginPath();
   context.rect(175, 100, 50, 50);
-  context.stroke();
   context.fill();
   context.closePath();
 }
@@ -75,7 +70,6 @@ function drawBox6() {
   context.fillStyle = "green";
   context.beginPath();
   context.rect(225, 100, 50, 50);
-  context.stroke();
   context.fill();
   context.closePath();
 }
@@ -86,7 +80,6 @@ function drawBox7() {
   context.fillStyle = "green";
   context.beginPath();
   context.rect(175, 150, 50, 50);
-  context.stroke();
   context.fill();
   context.closePath();
 }
@@ -97,7 +90,6 @@ function drawBox8() {
   context.fillStyle = "green";
   context.beginPath();
   context.rect(125, 200, 50, 50);
-  context.stroke();
   context.fill();
   context.closePath();
 }
@@ -108,7 +100,6 @@ function drawBox9() {
   context.fillStyle = "green";
   context.beginPath();
   context.rect(75, 200, 50, 50);
-  context.stroke();
   context.fill();
   context.closePath();
 }
@@ -119,7 +110,6 @@ function drawBox10() {
   context.fillStyle = "green";
   context.beginPath();
   context.rect(225, 200, 50, 50);
-  context.stroke();
   context.fill();
   context.closePath();
 }
@@ -130,7 +120,6 @@ function drawBox11() {
   context.fillStyle = "green";
   context.beginPath();
   context.rect(275, 200, 50, 50);
-  context.stroke();
   context.fill();
   context.closePath();
 }
