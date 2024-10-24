@@ -8,7 +8,7 @@ signature();
 function signature() {
   context.fillStyle = "black";
   context.beginPath();
-  context.rect(50, 10, 300, 300);
+  context.rect(50, 50, 300, 300);
   context.stroke();
   context.fill();
   context.closePath();
