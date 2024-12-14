@@ -16,7 +16,7 @@ class Star {
   constructor(x, y, size, color) {
     this.x = x;
     this.y = y;
-    this.size = size;
+    this.size = Math.abs(size);
     this.color = color;
   }
 
@@ -28,5 +28,16 @@ class Star {
   }
 }
 
-let star = new Star(100, 100, getRandom(-10, 30), "white");
-star.draw();
+let stars = [];
+for (let i = 0; i < 10; i++) {
+  stars.push(
+    new Star(
+      getRandom(0, canvasWidth),
+      getRandom(0, canvasHeight),
+      getRandom(5, 20),
+      getHSL(getRandom(0, 360), 80, 60)
+    )
+  );
+}
+
+stars.forEach((star) => star.draw());
