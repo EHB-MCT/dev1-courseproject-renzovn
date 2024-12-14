@@ -1,98 +1,99 @@
 "use strict";
-import context from "../../script/context.js";
-import * as Utils from "../../script/utils.js";
+import context from "../script/context.js";
+import * as Utils from "../script/utils.js";
 
-let canvasBreedte = context.canvas.width;
-let canvasHoogte = context.canvas.height;
+let canvasWidth = context.canvas.width;
+let canvasHeight = context.canvas.height;
 
-// instellen kleur
-let basisKleur = Utils.randomNumber(0, 360);
-let verzadiging = 80;
-let lichtheid = 60;
+// totebag image
+let toteImage = new Image();
+toteImage.src = "../../afbeeldingen/totebag.jpg";
 
-// afbeelding totebag
-let toteAfbeelding = new Image();
-toteAfbeelding.src = "../../afbeeldingen/totebag.jpg";
+// Scale totebag
+let scaleFactor = 0.5;
 
-// totebag scalen
-let schaalFactor = 0.5;
+// Tote position and dimensions
+let toteX, toteY, toteWidth, toteHeight;
 
-// wacht totdat de afbeelding is geladen en bepaal de afmetingen
-toteAfbeelding.onload = function () {
-  context.canvas.width = canvasBreedte;
-  context.canvas.height = canvasHoogte;
+toteImage.onload = function () {
+  // Calculate totebag dimensions based on scale factor
+  toteWidth = toteImage.width * scaleFactor;
+  toteHeight = toteImage.height * scaleFactor;
 
-  // bereken de afmetingen van de totebag op basis van de schaalfactor
-  let toteBreedte = toteAfbeelding.width * schaalFactor;
-  let toteHoogte = toteAfbeelding.height * schaalFactor;
+  // Position the totebag to be centered
+  toteX = (canvasWidth - toteWidth) / 2;
+  toteY = (canvasHeight - toteHeight) / 2;
+};
 
-  // positie van de totebag zodat het gecentreerd is
-  let toteX = (canvasBreedte - toteBreedte) / 2;
-  let toteY = (canvasHoogte - toteHoogte) / 2;
+// Array to store animated circles
+let circles = [];
+let numCircles = 50; // Number of circles
 
-  // stel marges in voor ontwerpgebied binnen de totebag
-  let ontwerpStartX = toteX + toteBreedte * 0.2; // 20% marge van links
-  let ontwerpEindX = toteX + toteBreedte * 0.7; // 30% marge van rechts
-  let ontwerpStartY = toteY + toteHoogte * 0.45; // 45% marge van de bovenkant (om de handvatten te vermijden)
-  let ontwerpEindY = toteY + toteHoogte * 0.85; // 15% marge van de onderkant
+// Mouse position
+let mouseX = canvasWidth / 2;
+let mouseY = canvasHeight / 2;
 
-  /**
-   * teken een cirkel met opgegeven parameters
-   * @param {number} x
-   * @param {number} y
-   * @param {number} straal
-   * @param {string} kleur
-   */
-  function tekenCirkel(x, y, straal, kleur) {
-    context.fillStyle = kleur;
-    context.strokeStyle = "black";
-    Utils.fillAndStrokeCircle(x, y, straal);
-  }
+// Initialize circles with random properties
+for (let i = 0; i < numCircles; i++) {
+  circles.push({
+    x: Utils.randomNumber(0, canvasWidth),
+    y: Utils.randomNumber(0, canvasHeight),
+    radius: Utils.randomNumber(10, 30),
+    color: Utils.hsl(Utils.randomNumber(0, 360), 80, 60),
+    speedX: Utils.randomNumber(-2, 2),
+    speedY: Utils.randomNumber(-2, 2),
+  });
+}
 
-  /**
-   * teken een vierkant met opgegeven parameters
-   * @param {number} x
-   * @param {number} y
-   * @param {number} grootte
-   * @param {string} kleur
-   */
-  function tekenVierkant(x, y, grootte, kleur) {
-    context.fillStyle = kleur;
-    context.strokeStyle = "black";
-    context.fillRect(x, y, grootte, grootte);
-    context.strokeRect(x, y, grootte, grootte);
-  }
+// Track mouse movement
+context.canvas.addEventListener("mousemove", (e) => {
+  let rect = context.canvas.getBoundingClientRect();
+  mouseX = e.clientX - rect.left;
+  mouseY = e.clientY - rect.top;
+});
 
-  /**
-   * teken random vormen binnen de totebag
-   */
-  function tekenWillekeurigeVormenOpTote() {
-    context.clearRect(0, 0, canvasBreedte, canvasHoogte);
+// Draw and animate circles
+function drawCircles() {
+  for (let circle of circles) {
+    // Draw circle
+    context.fillStyle = circle.color;
+    context.beginPath();
+    context.arc(circle.x, circle.y, circle.radius, 0, Math.PI * 2);
+    context.fill();
 
-    // teken de afbeelding van de totebag gecentreerd en op de juiste schaal
-    context.drawImage(toteAfbeelding, toteX, toteY, toteBreedte, toteHoogte);
+    // Update circle position
+    circle.x += circle.speedX;
+    circle.y += circle.speedY;
 
-    // teken random grootte van vormen in aangegeven marges
-    for (let i = 0; i < 30; i++) {
-      let x = Utils.randomNumber(ontwerpStartX, ontwerpEindX);
-      let y = Utils.randomNumber(ontwerpStartY, ontwerpEindY);
-      let grootte = Utils.randomNumber(5, 20);
+    // Bounce off edges
+    if (circle.x < 0 || circle.x > canvasWidth) circle.speedX *= -1;
+    if (circle.y < 0 || circle.y > canvasHeight) circle.speedY *= -1;
 
-      // random kleur
-      let kleur = Utils.hsl(
-        (basisKleur + Utils.randomNumber(-20, 20)) % 360,
-        verzadiging,
-        lichtheid
-      );
+    // Adjust speed based on mouse position
+    let dx = circle.x - mouseX;
+    let dy = circle.y - mouseY;
+    let distance = Math.sqrt(dx * dx + dy * dy);
 
-      // random keuze tussen cirkel of vierkant
-      if (Math.random() < 0.5) {
-        tekenCirkel(x, y, grootte / 2, kleur);
-      } else {
-        tekenVierkant(x, y, grootte, kleur);
-      }
+    if (distance < 150) {
+      circle.speedX += (dx / distance) * 0.1;
+      circle.speedY += (dy / distance) * 0.1;
     }
   }
+}
 
-  tekenWillekeurigeVormenOpTote();
-};
+// Animation loop
+function animate() {
+  context.clearRect(0, 0, canvasWidth, canvasHeight);
+
+  // Draw totebag image
+  if (toteImage.complete) {
+    context.drawImage(toteImage, toteX, toteY, toteWidth, toteHeight);
+  }
+
+  // Draw animated circles
+  drawCircles();
+
+  requestAnimationFrame(animate);
+}
+
+animate();
