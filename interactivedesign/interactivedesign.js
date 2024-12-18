@@ -29,7 +29,7 @@ class Star {
 }
 
 let stars = [];
-for (let i = 0; i < 10; i++) {
+for (let i = 0; i < 50; i++) {
   stars.push(
     new Star(
       getRandom(0, canvasWidth),
@@ -40,4 +40,16 @@ for (let i = 0; i < 10; i++) {
   );
 }
 
-stars.forEach((star) => star.draw());
+function renderStars() {
+  context.fillStyle = "#000"; // Achtergrondkleur resetten
+  context.fillRect(0, 0, canvasWidth, canvasHeight);
+
+  stars.forEach((star) => star.draw());
+}
+
+function startAnimation() {
+  renderStars();
+  requestAnimationFrame(startAnimation);
+}
+
+startAnimation();
