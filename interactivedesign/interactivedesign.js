@@ -2,14 +2,8 @@
 import context from "../script/context.js";
 import * as Utils from "../script/utils.js";
 
-// Controleer of de context correct is geïmporteerd
-if (!context) {
-  console.error("Error: Canvas context is not loaded correctly.");
-}
-
-// Fallback voor canvasgrootte
 let canvas = context?.canvas || document.querySelector("canvas");
-let canvasWidth = canvas?.width || 800; // Standaardwaarde als fallback
+let canvasWidth = canvas?.width || 800;
 let canvasHeight = canvas?.height || 600;
 
 // Star properties
@@ -126,25 +120,121 @@ function startAnimation() {
 
   renderStars();
 
-  // Draw name in the bottom-right corner
-  let padding = 20;
-  context.fillStyle = "#fff";
-  context.font = "16px Arial bold";
-  context.textAlign = "right";
-  context.textBaseline = "bottom";
-  context.fillText(
-    "RENZO'S INTERACTIVE DESIGN",
-    canvasWidth - padding,
-    canvasHeight - padding
-  );
+  // Vervang de handtekening door zwarte en groene blokken
+  signature();
 
   requestAnimationFrame(startAnimation);
 }
 
-// Initial setup
-if (canvas && context) {
-  createStars();
-  startAnimation();
-} else {
-  console.error("Error: Canvas or context not properly initialized.");
+createStars();
+startAnimation();
+
+// Vervangen handtekeningcode
+function signature() {
+  context.fillStyle = "black";
+  context.beginPath();
+  context.rect(canvasWidth - 350, canvasHeight - 350, 300, 300);
+  context.stroke();
+  context.fill();
+  context.closePath();
+
+  drawBox1();
+  drawBox2();
+  drawBox3();
+  drawBox4();
+  drawBox5();
+  drawBox6();
+  drawBox7();
+  drawBox8();
+  drawBox9();
+  drawBox10();
+  drawBox11();
+}
+
+function drawBox1() {
+  context.fillStyle = "green";
+  context.beginPath();
+  context.rect(canvasWidth - 275, canvasHeight - 350, 50, 50);
+  context.fill();
+  context.closePath();
+}
+
+function drawBox2() {
+  context.fillStyle = "green";
+  context.beginPath();
+  context.rect(canvasWidth - 225, canvasHeight - 350, 50, 50);
+  context.fill();
+  context.closePath();
+}
+
+function drawBox3() {
+  context.fillStyle = "green";
+  context.beginPath();
+  context.rect(canvasWidth - 175, canvasHeight - 350, 50, 50);
+  context.fill();
+  context.closePath();
+}
+
+function drawBox4() {
+  context.fillStyle = "green";
+  context.beginPath();
+  context.rect(canvasWidth - 275, canvasHeight - 300, 50, 50);
+  context.fill();
+  context.closePath();
+}
+
+function drawBox5() {
+  context.fillStyle = "green";
+  context.beginPath();
+  context.rect(canvasWidth - 225, canvasHeight - 300, 50, 50);
+  context.fill();
+  context.closePath();
+}
+
+function drawBox6() {
+  context.fillStyle = "green";
+  context.beginPath();
+  context.rect(canvasWidth - 175, canvasHeight - 300, 50, 50);
+  context.fill();
+  context.closePath();
+}
+
+function drawBox7() {
+  context.fillStyle = "green";
+  context.beginPath();
+  context.rect(canvasWidth - 225, canvasHeight - 250, 50, 50);
+  context.fill();
+  context.closePath();
+}
+
+function drawBox8() {
+  context.fillStyle = "green";
+  context.beginPath();
+  context.rect(canvasWidth - 275, canvasHeight - 200, 50, 50);
+  context.fill();
+  context.closePath();
+}
+
+function drawBox9() {
+  context.fillStyle = "green";
+  context.beginPath();
+  context.rect(canvasWidth - 325, canvasHeight - 200, 50, 50);
+  context.fill();
+  context.closePath();
+}
+
+function drawBox10() {
+  context.fillStyle = "green";
+  context.beginPath();
+  context.rect(canvasWidth - 175, canvasHeight - 200, 50, 50);
+  context.fill();
+  context.closePath();
+}
+
+function drawBox11() {
+  context.fillStyle = "green";
+  context.beginPath();
+  context.rect(canvasWidth - 125, canvasHeight - 200, 50, 50);
+  context.fill();
+  context.closePath();
 }
